@@ -2,16 +2,19 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
-process.env.NODE_ENV
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+const ESLintPlugin = require('eslint-webpack-plugin')
 
 module.exports = (env, argv) => {
   const isProd = argv.mode === 'production'
   const isDev = !isProd
 
-  const fileName = (ext) => 
-  isProd ? `[name].[contenthash].bundle.${ext}` : `[name].bundle.${ext}`
+  console.log('isProd', isProd)
+  console.log('isDev', isDev)
+
+  const filename = (ext) =>
+    isProd ? `[name].[contenthash].bundle.${ext}` : `[name].bundle.${ext}`
+
   const plugins = () => {
     const base = [
       new HtmlWebpackPlugin({
@@ -26,20 +29,17 @@ module.exports = (env, argv) => {
         ],
       }),
       new MiniCssExtractPlugin({
-        filename: fileName('css')
+        filename: filename('css')
       }),
       new CleanWebpackPlugin(),
-      new ESLintPlugin(),
     ]
 
     if (isDev) {
       base.push(new ESLintPlugin())
     }
-    return base;
-  }
-  console.log('prod', isProd)
-  console.log('dev', isDev)
 
+    return base
+  }
 
   return {
     target: 'web',
@@ -49,7 +49,7 @@ module.exports = (env, argv) => {
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: fileName('js'),
+      filename: filename('js')
     },
     resolve: {
       extensions: ['.js'],
@@ -59,14 +59,12 @@ module.exports = (env, argv) => {
       }
     },
     devServer: {
-      port: 3000,
+      port: '3000',
       open: true,
       hot: true,
-      watchContentBase: true,
-      watchFiles: './',
     },
-    plugins: plugins(),
     devtool: isDev ? 'source-map' : false,
+    plugins: plugins(),
     module: {
       rules: [
         {
@@ -91,4 +89,3 @@ module.exports = (env, argv) => {
     }
   }
 }
-
