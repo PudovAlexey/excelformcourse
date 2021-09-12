@@ -29,11 +29,13 @@
     "sass-loader": "^10.1.1",
     "webpack": "^5.18.0",
     "webpack-cli": "^4.4.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^4.2.0"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
+    "@webpack-cli/serve": "^1.5.2",
     "core-js": "^3.9.0",
+    "normalize.css": "^8.0.1",
     "regenerator-runtime": "^0.13.7"
   }
 }
