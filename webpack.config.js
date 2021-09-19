@@ -35,7 +35,9 @@ module.exports = (env, argv) => {
     ]
 
     if (isDev) {
-      base.push(new ESLintPlugin())
+      base.push(new ESLintPlugin({
+        fix: true
+      }))
     }
 
     return base
@@ -81,7 +83,8 @@ module.exports = (env, argv) => {
           use: {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env']
+              presets: ['@babel/preset-env'],
+              plugins: ['@babel/plugin-proposal-class-properties']
             }
           }
         }
